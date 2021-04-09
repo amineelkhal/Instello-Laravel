@@ -6,7 +6,6 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AuthenticationController;
 use Illuminate\Support\Facades\Route;
 
-//** ROUTES DEFINITION */
 //--- NOT CONNECTED USERS ----
 Route::get('/', [IndexController::class, 'index'])->name("index");
 Route::get('/register', [IndexController::class, 'register'])->name('register');
@@ -22,24 +21,6 @@ Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 Route::get('/settings', [HomeController::class, 'settings'])->name('settings');
 Route::post('/updateuser', [HomeController::class, 'updateUser'])->name('updateUser');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//PRINT A SIMPLE MESSAGE =============================
-Route::get('/test', function () { print "Hello from laravel"; });
-//RENDER A SIMPLE VIEW
-Route::view('/test2', 'welcome');
-//EXECUTE A FUNCTION INSIDE A CONTROLLER
+//TESTS CONTROLLERS =============================
 Route::get('/test3', [TestController::class, 'hello']);
 Route::get('/test4', [TestController::class, 'create']);

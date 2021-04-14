@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -13,19 +14,19 @@ class HomeController extends Controller
     }
 
     public function index(){
-        return view('feed');
+        return view('feed', ['currentpage'=>'feed']);
     }
 
     public function messages(){
-        return view('messages');
+        return view('messages', ['currentpage'=>'messages']);
     }
 
     public function profile(){
-        return view('profile');
+        return view('profile', ['currentpage'=>'profile']);
     }
 
     public function settings(){
-        return view('settings');
+        return view('settings', ['currentpage'=>'settings']);
     }
 
     public function updateUser(Request $request){
@@ -72,6 +73,30 @@ class HomeController extends Controller
         //6 - GO BACK TO PREVIOUS PAGE
             return back();
         }
+
+    }
+
+    public function addpost(Request $request){
+        // 1 - Validation
+        $this->validate($request , [
+            'text' => 'required'
+        ]);
+
+        //dd( $request->file('picture') );
+        $fileName = $request->file('picture')->getClientOriginalName();
+        $size = sizeof(explode(".", $fileName));
+        $fileExt = explode(".", $fileName)[ $size - 1 ];
+        $finalFileName = auth()->user()->id . time() . "." . $fileExt;
+        $request->file('picture')->storeAs('posts', $finalFileName, 'mylocal');
+
+        Post::create([
+            'userId' => auth()->id(),
+            'text' => $request->text,
+            'picture' => $finalFileName,
+            'likes' => 0
+        ]);
+
+        return back();
 
     }
 

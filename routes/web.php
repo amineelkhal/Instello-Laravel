@@ -20,6 +20,7 @@ Route::get('/messages', [HomeController::class, 'messages'])->name('messages');
 Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 Route::get('/settings', [HomeController::class, 'settings'])->name('settings');
 Route::post('/updateuser', [HomeController::class, 'updateUser'])->name('updateUser');
+Route::post('/addpost', [HomeController::class, 'addpost'])->name('addpost');
 
 //TESTS CONTROLLERS =============================
 Route::get('/test3', [TestController::class, 'hello']);

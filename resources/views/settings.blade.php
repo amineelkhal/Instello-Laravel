@@ -55,8 +55,11 @@
                         @enderror
                     </div>
                     <div class="col-span-2">
-                        <label for=""> Picture</label>
-                        <input type="file" name="picture" />
+                        <label for="picture">
+                            <img style="max-width:100px;" src="assets/images/profiles/{{ auth()->user()->userpicture }}" />
+                        </label>
+                        <input type="file" id="picture" name="picture" style="display:none;" />
+                        <input type="button"  id="pictureBtn" class="button bg-blue-700" value="Browse" />
                     </div>
                 </div>
 
@@ -65,11 +68,6 @@
                     <button type="submit" class="button bg-blue-700"> Save </button>
                 </div>
                 </form>
-
-
-
-
-
 
             </div>
 
@@ -83,8 +81,15 @@
 
 @if ( session('status') )
 <script>
-UIkit.notification({message: '{{ session("status") }}', status: 'success'})
+UIkit.notification({message: '{{ session("status") }}', status: 'success'});
 </script>
 @endif
+
+<script>
+    $("#pictureBtn").click(function(){
+        $("#picture").click();
+    })
+</script>
+
 
 @endsection

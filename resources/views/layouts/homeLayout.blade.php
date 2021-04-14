@@ -50,7 +50,7 @@
             <div class="sidebar_inner" data-simplebar>
                 <div class="flex flex-col items-center my-6 uk-visible@s">
                     <div class="bg-gradient-to-tr from-yellow-600 to-pink-600 p-1 rounded-full transition m-0.5 mr-2  w-24 h-24">
-                        <img src="assets/images/avatars/avatar-2.jpg" class="bg-gray-200 border-4 border-white rounded-full w-full h-full">
+                        <img src="assets/images/profiles/{{ auth()->user()->userpicture }}" class="bg-gray-200 border-4 border-white rounded-full w-full h-full">
                     </div>
                     <a href="profile.html" class="text-xl font-medium capitalize mt-4 uk-link-reset">  {{ auth()->user()->name }}
                     </a>
@@ -77,7 +77,7 @@
                 </div>
                 <hr class="-mx-4 -mt-1 uk-visible@s">
                 <ul>
-                    <li class="active">
+                    <li @if ( $currentpage == 'feed') class="active" @endif>
                         <a href="{{ route('feed') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -85,13 +85,12 @@
                             </svg>
                             <span> Feed </span> </a>
                     </li>
-
-                    <li>
+                    <li @if ( $currentpage == 'messages') class="active" @endif>
                         <a href="{{ route('messages') }}">
                             <i class="uil-location-arrow"></i>
                             <span> Messages </span> <span class="nav-tag"> 3</span> </a>
                     </li>
-                    <li>
+                    <li @if ( $currentpage == 'profile') class="active" @endif>
                         <a href="{{ route('profile') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -151,9 +150,11 @@
                         <!-- upload dropdown box -->
                         <div uk-dropdown="pos: top-right;mode:click ; animation: uk-animation-slide-bottom-small" class="header_dropdown">
 
+                            <form action="{{ route('addpost') }}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <!-- notivication header -->
                             <div class="px-4 py-3 -mx-5 -mt-4 mb-5 border-b">
-                                <h4>Upload Video</h4>
+                                <h4>Upload picture</h4>
                             </div>
 
                             <!-- notification contents -->
@@ -168,39 +169,29 @@
                                         </svg>
                                     </div>
 
-                                    <p class="my-3 leading-6"> Do you have a video wants to share us <br> please upload her ..
+                                    <p class="my-3 leading-6"> Do you have a picture wants to share us <br> please upload her ..
                                     </p>
                                     <div uk-form-custom>
-                                        <input type="file">
+                                        <input type="file" name="picture">
                                         <a href="#" class="button soft-warning small"> Choose file</a>
                                     </div>
 
-                                    <a href="#" class="uk-text-muted mt-3 uk-link" uk-toggle="target: .choose-upload ;  animation: uk-animation-slide-right-small, uk-animation-slide-left-medium; queued: true">
-                                        Or Import Video </a>
+                                    <a href="#" class="uk-text-muted mt-3 uk-link" style="color:#be185d !important" uk-toggle="target: .choose-upload ;  animation: uk-animation-slide-right-small, uk-animation-slide-left-medium; queued: true">
+                                        Next </a>
                                 </div>
 
                                 <div class="uk-flex uk-flex-column choose-upload" hidden>
-                                    <div class="mx-auto flex flex-col h-24 items-center justify-center relative w-full rounded-lg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
-                                            <path fill-rule="evenodd" d="M2 9.5A3.5 3.5 0 005.5 13H9v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 15.586V13h2.5a4.5 4.5 0 10-.616-8.958 4.002 4.002 0 10-7.753 1.977A3.5 3.5 0 002 9.5zm9 3.5H9V8a1 1 0 012 0v5z" clip-rule="evenodd" />
-                                        </svg>
+                                    <div>
+                                        <textarea name="text" style="padding:10px; resize:none; margin-bottom:10px" rows="2" class="shadow-none bg-gray-100"></textarea>
                                     </div>
-                                    <p class="my-3 leading-6"> Import videos from YouTube <br> Copy / Paste your video link here </p>
-                                    <form class="uk-grid-small" uk-grid>
-                                        <div class="uk-width-expand">
-                                            <input type="text" class="uk-input uk-form-small  bg-gray-200 dark:bg-gray-700" style="box-shadow:none" placeholder="Paste link">
-                                        </div>
-                                        <div class="uk-width-auto"> <button type="submit" class="button soft-warning -ml-2">
-                                                Import </button> </div>
-                                    </form>
-                                    <a href="#" class="uk-text-muted mt-3 uk-link" uk-toggle="target: .choose-upload ; animation: uk-animation-slide-left-small, uk-animation-slide-right-medium; queued: true">
-                                        Or Upload Video </a>
+                                    <button type="submit" class="button soft-warning">Upload</button>
+                                    <a href="#" class="uk-text-muted mt-3 uk-link" style="color:#be185d !important" uk-toggle="target: .choose-upload ;  animation: uk-animation-slide-right-small, uk-animation-slide-left-medium; queued: true">
+                                        Back </a>
                                 </div>
 
                             </div>
-                            <div class="px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm dark:border-gray-500 dark:text-gray-500">
-                                Your Video size Must be Maxmium 999MB
-                            </div>
+
+                            </form>
                         </div>
 
                         <!-- Notification -->
@@ -362,7 +353,7 @@
                         <!-- profile -->
 
                         <a href="#">
-                            <img src="assets/images/avatars/avatar-2.jpg" class="header-avatar" alt="">
+                            <img src="assets/images/profiles/{{ auth()->user()->userpicture }}" class="header-avatar" alt="">
                         </a>
                         <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                             <ul>
@@ -399,7 +390,7 @@
                     <div class="flex flex-1 items-center space-x-4">
                         <a href="#">
                             <div class="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">
-                                <img src="assets/images/avatars/avatar-2.jpg" class="bg-gray-200 border border-white rounded-full w-8 h-8">
+                                <img src="assets/images/profiles/{{ auth()->user()->userpicture }}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
                             </div>
                         </a>
                         <span class="block text-lg font-semibold"> Johnson smith </span>

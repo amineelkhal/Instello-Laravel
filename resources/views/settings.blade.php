@@ -31,21 +31,28 @@
                 <div class="grid grid-cols-2 gap-3 lg:p-6 p-4">
                     <div>
                         <label for=""> First name</label>
-                        <input type="text" value="{{ auth()->user()->firstname }}" placeholder="Your name.." class="shadow-none bg-gray-100">
+                        <input type="text" name="firstname" value="{{ auth()->user()->firstname }}" placeholder="Your name.." class="shadow-none bg-gray-100" style="@error('firstname') border:1px solid red @enderror">
+                        @error('firstname')
+                        <div class="uk-text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div>
                         <label for=""> Last name</label>
-                        <input type="text" value="{{ auth()->user()->lastname }}" placeholder="Your name.." class="shadow-none bg-gray-100">
+                        <input type="text" name="lastname" value="{{ auth()->user()->lastname }}" placeholder="Your name.." class="shadow-none bg-gray-100" style="@error('lastname') border:1px solid red @enderror">
+                        @error('lastname')
+                        <div class="uk-text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-span-2">
-                        <label for=""> Email</label>
-                        <input type="text" value="{{ auth()->user()->email }}" placeholder="Your name.." class="shadow-none bg-gray-100">
+                        <label for="">Email</label>
+                        <input type="text" disabled value="{{ auth()->user()->email }}" class="shadow-none bg-gray-100">
                     </div>
                     <div class="col-span-2">
                         <label for="about">About me</label>
-                        <textarea id="about" name="about" rows="3" class="shadow-none bg-gray-100">
-                            {{ auth()->user()->description }}
-                        </textarea>
+                        <textarea id="about" name="description" style="padding:20px; resize:none;  @error('description') border:1px solid red @enderror" rows="3" class="shadow-none bg-gray-100">{{ auth()->user()->description }}</textarea>
+                        @error('description')
+                        <div class="uk-text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-span-2">
                         <label for=""> Picture</label>
@@ -59,6 +66,11 @@
                 </div>
                 </form>
 
+
+
+
+
+
             </div>
 
         </div>
@@ -68,4 +80,11 @@
 @endsection
 
 @section('js')
+
+@if ( session('status') )
+<script>
+UIkit.notification({message: '{{ session("status") }}', status: 'success'})
+</script>
+@endif
+
 @endsection

@@ -36,7 +36,9 @@ class IndexController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'password' => Hash::make($request->password),
-            'email' => $request->email
+            'email' => $request->email,
+            'userpicture' => 'default.png',
+            'description' => ''
         ]);
 
         //3 - AFTER SAVING USER

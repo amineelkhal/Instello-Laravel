@@ -25,3 +25,4 @@ Route::post('/addpost', [HomeController::class, 'addpost'])->name('addpost');
 //TESTS CONTROLLERS =============================
 Route::get('/test3', [TestController::class, 'hello']);
 Route::get('/test4', [TestController::class, 'create']);
+Route::get('/test', [TestController::class, 'testpost']);

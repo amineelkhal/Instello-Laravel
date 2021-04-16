@@ -507,6 +507,19 @@
     <script src="assets/js/uikit.js"></script>
     <script src="assets/js/simplebar.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script>
+        @error('text')
+            UIkit.notification({message: '{{ $message }}', status: 'danger', timeout:'2000'});
+        @enderror
+
+        @if ( session('success') )
+            UIkit.notification({message: '{{ session('success') }}', status: 'success', timeout:'2000'});
+        @endif
+        @if ( session('error') )
+            UIkit.notification({message: '{{ session('error') }}', status: 'danger', timeout:'2000'});
+        @endif
+
+    </script>
     @yield('js')
 </body>
 </html>

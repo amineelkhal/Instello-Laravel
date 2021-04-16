@@ -14,7 +14,8 @@ class HomeController extends Controller
     }
 
     public function index(){
-        return view('feed', ['currentpage'=>'feed']);
+        $posts = Post::paginate(10);
+        return view('feed', ['currentpage'=>'feed', 'posts'=>$posts]);
     }
 
     public function messages(){
@@ -89,14 +90,19 @@ class HomeController extends Controller
         $finalFileName = auth()->user()->id . time() . "." . $fileExt;
         $request->file('picture')->storeAs('posts', $finalFileName, 'mylocal');
 
-        Post::create([
-            'userId' => auth()->id(),
+        $post = Post::create([
+            'user_id' => auth()->id(),
             'text' => $request->text,
             'picture' => $finalFileName,
             'likes' => 0
         ]);
 
-        return back();
+        if ( $post ){
+            return back()->with('success', 'Post created...');
+        }
+        else{
+            return back()->with('error', 'Error while creating post');
+        }
 
     }
 

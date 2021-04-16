@@ -10,7 +10,7 @@
 }
 
 [class^="icon-feather-"], [class*=" icon-feather-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
+  /* use !important to prevent issues wi    th browser extensions that change fonts */
   font-family: 'Feather-Icons' !important;
   speak: none;
   font-style: normal;
